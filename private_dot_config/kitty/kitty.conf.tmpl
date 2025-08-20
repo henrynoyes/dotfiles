@@ -17,7 +17,7 @@ hide_window_decorations yes
 
 #-- TAB --#
 tab_bar_min_tabs 1
-tab_title_template "{bell_symbol}{layout_name.replace('splits', '\u25FB').replace('grid', '\u229E').replace('fat', '\u2B12').replace('tall', '\u25E7')} {tab.active_wd.replace('/home/henry', '~', 1)}"
+tab_title_template "{bell_symbol}{layout_name.replace('splits', '\u25FB').replace('grid', '\u229E').replace('fat', '\u2B12').replace('tall', '\u25E7')} {tab.active_wd.replace('{{ .chezmoi.homeDir }}', '~', 1)}"
 
 #-- KEYBINDS --#
 kitty_mod alt
