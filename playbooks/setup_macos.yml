@@ -1,0 +1,50 @@
+---
+- name: macOS setup
+  hosts: localhost
+  connection: local
+  become: no
+  gather_facts: yes
+
+  vars:
+    homebrew_formulae:
+      - bat
+      - fd
+      - fzf
+      - lazygit
+      - neovim
+      - ripgrep
+      - starship
+
+    homebrew_casks:
+      - font-ubuntu-mono-nerd-font
+      - kitty
+
+  pre_tasks:
+    - name: check OS and architecture
+      fail:
+        msg: "This playbook is designed for Apple Silicon Macs"
+      when: ansible_os_family != "Darwin" or ansible_machine != "arm64"
+
+  tasks:
+    - name: install formulae
+      community.general.homebrew:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ homebrew_formulae }}"
+
+    - name: install casks
+      community.general.homebrew_cask:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ homebrew_casks }}"
+
+    - name: setup fzf shell integration
+      shell: /opt/homebrew/opt/fzf/install --all --no-update-rc
+      args:
+        creates: ~/.fzf.zsh
+
+    - name: init Starship in zsh
+      lineinfile:
+        path: ~/.zprofile
+        line: 'eval "$(starship init zsh)"'
+        create: yes

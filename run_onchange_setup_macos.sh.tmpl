@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+# playbooks/setup_macos.yml hash: {{ include "playbooks/setup_macos.yml" | sha256sum }}
+
+echo "Running macOS setup playbook..."
+ansible-playbook {{ joinPath .chezmoi.sourceDir "playbooks/setup_macos.yml" | quote }}

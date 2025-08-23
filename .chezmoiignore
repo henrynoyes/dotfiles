@@ -1,0 +1,6 @@
+README.md
+playbooks/
+
+{{- if eq .chezmoi.os "darwin" }}
+dot_bash_aliases
+{{- end }}
