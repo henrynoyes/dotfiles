@@ -37,6 +37,12 @@
         name: "{{ item }}"
         state: present
       loop: "{{ homebrew_casks }}"
+    
+    - name: add local bin to path for chezmoi
+      lineinfile:
+        path: ~/.zshrc
+        line: 'export PATH="$HOME/.local/bin:$PATH"'
+        create: yes
 
     - name: setup fzf shell integration
       shell: /opt/homebrew/opt/fzf/install --all --no-update-rc
@@ -45,6 +51,6 @@
 
     - name: init Starship in zsh
       lineinfile:
-        path: ~/.zprofile
+        path: ~/.zshrc
         line: 'eval "$(starship init zsh)"'
         create: yes
