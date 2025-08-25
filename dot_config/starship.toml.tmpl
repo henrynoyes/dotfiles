@@ -1,3 +1,4 @@
+{{- $palette := includeTemplate "palette.tmpl" . | fromJson -}}
 format = """
 $username\
 $hostname\
@@ -11,11 +12,11 @@ $character"""
 add_newline=false
 
 [directory]
-style = "{{ .palette.primary }}"
+style = "{{ $palette.primary }}"
 
 [character]
-success_symbol = "[❯]({{ .palette.secondary }})"
-error_symbol = "[❯]({{ .palette.secondary }})"
+success_symbol = "[❯]({{ $palette.secondary }})"
+error_symbol = "[❯]({{ $palette.secondary }})"
 
 [git_branch]
 format = "[$branch]($style)"

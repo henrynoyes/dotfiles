@@ -1,0 +1,5 @@
+{{- if eq .chezmoi.os "darwin" -}}
+{"primary": "#9ce7fc", "light_primary": "#c4f1fd", "secondary": "#fe9d0b", "light_secondary": "#febe5d"}
+{{- else if eq .chezmoi.os "linux" -}}
+{"primary": "#9280ef", "light_primary": "#b1a4f4", "secondary": "#45cb85", "light_secondary": "#80dbac"}
+{{- end -}}

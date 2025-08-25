@@ -1,4 +1,5 @@
 ## modified moonfly - github.com/bluz71/vim-moonfly-colors
+{{- $palette := includeTemplate "palette.tmpl" . | fromJson -}}
 
 background #080808
 foreground #bdbdbd
@@ -26,6 +27,6 @@ inactive_tab_foreground #b2b2b2
 inactive_tab_background #323437
 inactive_border_color #323437
 
-selection_background {{ .palette.light_primary }}
-active_tab_background {{ .palette.primary }}
-active_border_color {{ .palette.primary }}
+selection_background {{ $palette.light_primary }}
+active_tab_background {{ $palette.primary }}
+active_border_color {{ $palette.primary }}
