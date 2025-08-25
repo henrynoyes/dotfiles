@@ -5,11 +5,11 @@ url = "git@github.com:henrynoyes/dotfiles.git"
 [data.palette]
 {{- if eq .chezmoi.os "darwin" }}
 primary = "#9ce7fc"
-light-primary = "#c4f1fd"
+light_primary = "#c4f1fd"
 secondary = "#fe9d0b"
 light-secondary = "#febe5d"
 {{- else if eq .chezmoi.os "linux" }}
 primary = "#74b2ff"
-light-primary = "#a3ceff"
+light_primary = "#a3ceff"
 secondary = "#ae81ff"
 light-secondary = "#d1b3ff"
