@@ -1,19 +1,14 @@
-#-- THEME --#
-include themes/moonfly.conf
-
 #-- FONT --#
-font_family      family="UbuntuMono Nerd Font"
-bold_font        auto
-italic_font      auto
+font_family family="UbuntuMono Nerd Font"
+bold_font auto
+italic_font auto
 bold_italic_font auto
-font_size 13.0
 
 #-- WINDOW --#
 remember_window_size no
-initial_window_width  800
+initial_window_width 800
 initial_window_height 500
 enabled_layouts splits,grid,fat,tall
-hide_window_decorations yes
 
 #-- TAB --#
 tab_bar_min_tabs 1
@@ -35,3 +30,7 @@ map ctrl+l clear_terminal scroll active
 #-- OTHER --#
 scrollback_lines 10000
 enable_audio_bell no
+
+#-- THEME --#
+include themes/moonfly.conf
+include themes/{{ .chezmoi.os }}.conf

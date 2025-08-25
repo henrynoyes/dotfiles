@@ -1,6 +1,4 @@
-## moonfly theme for kitty
-##
-## Upstream: github.com/bluz71/vim-moonfly-colors
+## modified moonfly - github.com/bluz71/vim-moonfly-colors
 
 background #080808
 foreground #bdbdbd
@@ -22,11 +20,12 @@ color12 #74b2ff
 color13 #ae81ff
 color14 #85dc85
 color15 #e4e4e4
-selection_background #b2ceee
 selection_foreground #080808
 active_tab_foreground #080808
-active_tab_background #80a0ff
 inactive_tab_foreground #b2b2b2
 inactive_tab_background #323437
-active_border_color #80a0ff
 inactive_border_color #323437
+
+selection_background {{ .palette.light-primary }}
+active_tab_background {{ .palette.primary }}
+active_border_color {{ .palette.primary }}

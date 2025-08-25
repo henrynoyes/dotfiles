@@ -11,12 +11,11 @@ $character"""
 add_newline=false
 
 [directory]
-style = "blue"
+style = "{{ .palette.primary }}"
 
 [character]
-success_symbol = "[❯](purple)"
-error_symbol = "[❯](purple)"
-vimcmd_symbol = "[❮](green)"
+success_symbol = "[❯]({{ .palette.secondary }})"
+error_symbol = "[❯]({{ .palette.secondary }})"
 
 [git_branch]
 format = "[$branch]($style)"
