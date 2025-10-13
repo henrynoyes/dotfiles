@@ -1,0 +1,8 @@
+{{- if eq .chezmoi.os "debian" -}}
+#!/bin/bash
+
+# playbooks/setup_ubuntu.yml hash: {{ include "playbooks/setup_ubuntu.yml" | sha256sum }}
+
+echo "Running ubuntu setup playbook..."
+ansible-playbook {{ joinPath .chezmoi.sourceDir "playbooks/setup_ubuntu.yml" | quote }}
+{{ end -}}

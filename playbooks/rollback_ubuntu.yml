@@ -1,0 +1,64 @@
+---
+- name: ubuntu setup rollback
+  hosts: localhost
+  connection: local
+  become: no
+  gather_facts: yes
+
+  vars:
+    crates:
+      - bat
+      - fd-find
+      - ripgrep
+      - starship
+
+  tasks:
+    - name: remove bashrc config
+      blockinfile:
+        path: ~/.bashrc
+        marker: "# {mark} DOTFILES PLAYBOOK"
+        state: absent
+
+    - name: remove neovim
+      file:
+        path: ~/.local/bin/nvim
+        state: absent
+
+    - name: remove lazygit
+      file:
+        path: ~/.local/bin/lazygit
+        state: absent
+
+    - name: remove fzf
+      file:
+        path: ~/.fzf
+        state: absent
+
+    - name: remove kitty
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - ~/.local/bin/kitty
+        - ~/.local/bin/kitten
+        - ~/.local/share/applications/kitty.desktop
+        - ~/.local/share/applications/kitty-open.desktop
+        - ~/.config/xdg-terminals.list
+        - ~/.local/kitty.app
+
+    - name: remove ubuntu mono nerd font
+      file:
+        path: ~/.local/share/fonts/UbuntuMono
+        state: absent
+
+    - name: remove getnf
+      file:
+        path: ~/.local/bin/getnf
+        state: absent
+
+    - name: uninstall crates
+      command: cargo uninstall {{ item }}
+      loop: "{{ crates }}"
+      register: cargo_uninstall
+      failed_when: false
+      changed_when: "'Removing' in cargo_uninstall.stderr"

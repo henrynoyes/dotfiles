@@ -1,0 +1,88 @@
+---
+- name: ubuntu setup
+  hosts: localhost
+  connection: local
+  become: no
+  gather_facts: yes
+
+  vars:
+    crates:
+      - bat
+      - fd-find
+      - ripgrep
+      - starship
+
+  pre_tasks:
+    - name: check OS
+      fail:
+        msg: "This playbook is designed for Ubuntu machines"
+      when: ansible_os_family != "Debian"
+
+  tasks:
+    - name: install crates
+      command: cargo install {{ item }} --locked
+      loop: "{{ crates }}"
+      register: cargo_install
+      failed_when: cargo_install.rc != 0
+      changed_when: cargo_install.rc == 0 and 'Ignored' not in cargo_install.stderr
+
+    - name: install getnf
+      shell: curl -fsSL https://raw.githubusercontent.com/getnf/getnf/main/install.sh | bash
+      args:
+        creates: ~/.local/bin/getnf
+
+    - name: install ubuntu mono nerd font
+      shell: |
+        ~/.local/bin/getnf -i UbuntuMono
+        fc-cache -fv
+      args:
+        creates: ~/.local/share/fonts/UbuntuMono/UbuntuMonoNerdFont-Regular.ttf
+
+    - name: install kitty
+      shell: |
+        curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+        ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
+        cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/
+        cp ~/.local/kitty.app/share/applications/kitty-open.desktop ~/.local/share/applications/
+        sed -i "s|Icon=kitty|Icon=$HOME/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png|g" ~/.local/share/applications/kitty*.desktop
+        sed -i "s|Exec=kitty|Exec=$HOME/.local/kitty.app/bin/kitty|g" ~/.local/share/applications/kitty*.desktop
+        echo 'kitty.desktop' > ~/.config/xdg-terminals.list
+      args:
+        creates: ~/.local/kitty.app/bin/kitty
+
+    - name: install fzf
+      shell: |
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+        ~/.fzf/install --all --no-update-rc
+      args:
+        creates: ~/.fzf/bin/fzf
+
+    - name: install lazygit
+      shell: |
+        LAZYGIT_VERSION=$(curl -s https://api.github.com/repos/jesseduffield/lazygit/releases/latest | grep -Po '"tag_name": "v\K[^"]*')
+        curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+        tar xf lazygit.tar.gz lazygit
+        install lazygit ~/.local/bin/
+        rm lazygit lazygit.tar.gz
+      args:
+        chdir: /tmp
+        creates: ~/.local/bin/lazygit
+
+    - name: install neovim
+      shell: |
+        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+        chmod u+x nvim.appimage
+        mv nvim.appimage ~/.local/bin/nvim
+      args:
+        creates: ~/.local/bin/nvim
+
+    - name: configure bashrc
+      blockinfile:
+        path: ~/.bashrc
+        marker: "# {mark} DOTFILES PLAYBOOK"
+        block: |
+          export PATH="$HOME/.local/bin:$PATH"
+          export PATH="$HOME/.cargo/bin:$PATH"
+          source ~/.fzf.bash
+          eval "$(starship init bash)"
+        create: yes
