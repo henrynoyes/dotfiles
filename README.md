@@ -36,6 +36,18 @@ Ansible - `sudo apt install ansible`
 sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply --ssh henrynoyes
 ```
 
+## Uninstallation
+
+Run the appropriate rollback playbook manually with,
+```shell
+ansible-playbook playbooks/rollback_{macos|ubuntu}.yml
+```
+
+Then purge chezmoi with,
+```shell
+chezmoi purge --binary
+```
+
 ## Inspiration
 
 [The ultimate dotfiles setup | Singularity Club](https://www.youtube.com/watch?v=-RkANM9FfTM)
