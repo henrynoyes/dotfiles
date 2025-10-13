@@ -70,10 +70,12 @@
 
     - name: install neovim
       shell: |
-        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
-        chmod u+x nvim.appimage
-        mv nvim.appimage ~/.local/bin/nvim
+        curl -Lo nvim.tar.gz https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+        tar xf nvim.tar.gz -C ~/.local/share --transform 's/nvim-linux-x86_64/nvim/'
+        ln -sf ~/.local/share/nvim/bin/nvim ~/.local/bin/nvim
+        rm nvim.tar.gz
       args:
+        chdir: /tmp
         creates: ~/.local/bin/nvim
 
     - name: configure bashrc

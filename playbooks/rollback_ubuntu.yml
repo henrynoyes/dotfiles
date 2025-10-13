@@ -1,5 +1,5 @@
 ---
-- name: ubuntu setup rollback
+- name: ubuntu rollback
   hosts: localhost
   connection: local
   become: no
@@ -21,8 +21,11 @@
 
     - name: remove neovim
       file:
-        path: ~/.local/bin/nvim
+        path: "{{ item }}"
         state: absent
+      loop:
+        - ~/.local/bin/nvim
+        - ~/.local/share/nvim
 
     - name: remove lazygit
       file:
