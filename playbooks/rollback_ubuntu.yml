@@ -12,6 +12,12 @@
       - ripgrep
       - starship
 
+  pre_tasks:
+    - name: check OS
+      fail:
+        msg: "This playbook is designed for Ubuntu machines"
+      when: ansible_os_family != "Debian"
+
   tasks:
     - name: remove bashrc config
       blockinfile:
