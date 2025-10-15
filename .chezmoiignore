@@ -1,6 +1,7 @@
 chezmoi.toml
 README.md
 playbooks/
+docs/
 
 {{- if eq .chezmoi.os "darwin" }}
 dot_bash_aliases
