@@ -4,5 +4,6 @@
 # playbooks/setup_macos.yml hash: {{ include "playbooks/setup_macos.yml" | sha256sum }}
 
 echo "Running macOS setup playbook..."
+export ANSIBLE_CONFIG={{ joinPath .chezmoi.sourceDir "playbooks/ansible.cfg" | quote }}
 ansible-playbook {{ joinPath .chezmoi.sourceDir "playbooks/setup_macos.yml" | quote }}
 {{ end -}}

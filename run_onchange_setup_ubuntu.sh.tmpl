@@ -4,5 +4,6 @@
 # playbooks/setup_ubuntu.yml hash: {{ include "playbooks/setup_ubuntu.yml" | sha256sum }}
 
 echo "Running ubuntu setup playbook..."
+export ANSIBLE_CONFIG={{ joinPath .chezmoi.sourceDir "playbooks/ansible.cfg" | quote }}
 ansible-playbook {{ joinPath .chezmoi.sourceDir "playbooks/setup_ubuntu.yml" | quote }}
 {{ end -}}
