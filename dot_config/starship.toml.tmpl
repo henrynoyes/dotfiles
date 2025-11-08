@@ -1,6 +1,5 @@
 {{- $palette := includeTemplate "palette.tmpl" . | fromJson -}}
 format = """
-$username\
 $hostname\
 $directory\
 $git_branch\
@@ -18,12 +17,18 @@ style = "{{ $palette.primary }}"
 success_symbol = "[❯]({{ $palette.secondary }})"
 error_symbol = "[❯]({{ $palette.secondary }})"
 
+[hostname]
+ssh_only = false
+detect_env_vars = ['SSH_CONNECTION', 'REMOTEHOST']
+format = '[$hostname 🌏 ]($style)'
+style = 'bold cyan'
+
 [git_branch]
 format = "[$branch]($style)"
-style = "bright-black"
+style = "bright black"
 
 [git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)]($style) ($ahead_behind$stashed)]($style)"
 style = "cyan"
 conflicted = "​"
 untracked = "​"
@@ -35,7 +40,7 @@ stashed = "≡"
 
 [python]
 format = '([$symbol\($virtualenv\)]($style) )'
-style = "green bold"
+style = "bold green"
 
 [pixi]
 disabled = true
@@ -51,4 +56,4 @@ fi
 when = 'test -n "$PIXI_PROJECT_NAME"'
 format = '[$symbol (\($output\) )]($style)'
 symbol = '🧚'
-style = 'yellow bold'
+style = 'bold yellow'
