@@ -28,8 +28,7 @@ format = "[$branch]($style)"
 style = "bright black"
 
 [git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)]($style) ($ahead_behind$stashed)]($style)"
-style = "cyan"
+format = "[(*$conflicted$untracked$modified$staged$renamed$deleted) ($ahead_behind$stashed)]($style)"
 conflicted = "​"
 untracked = "​"
 modified = "​"
@@ -37,6 +36,7 @@ staged = "​"
 renamed = "​"
 deleted = "​"
 stashed = "≡"
+style = "purple"
 
 [python]
 format = '([$symbol\($virtualenv\)]($style) )'
