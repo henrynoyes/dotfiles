@@ -20,7 +20,7 @@
 
   tasks:
     - name: install crates
-      command: cargo install {{ item }} --locked
+      command: cargo binstall {{ item }}
       loop: "{{ crates }}"
       register: cargo_install
       failed_when: cargo_install.rc != 0
