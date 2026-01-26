@@ -2,7 +2,7 @@
 
 Automated terminal configuration using [chezmoi](https://www.chezmoi.io/) and [Ansible](https://docs.ansible.com/).
 
-[![dotfiles install](https://asciinema.org/a/1BO2VctvP2CH9MQnAvbEONHb3.svg)](https://asciinema.org/a/1BO2VctvP2CH9MQnAvbEONHb3?autoplay=1)
+![dotfiles install](docs/install.gif)
 
 ![neofetch](docs/neofetch.png)
 
