@@ -1,6 +1,7 @@
 {{- $palette := includeTemplate "palette.tmpl" . | fromJson -}}
 format = """
 $hostname\
+${env_var.ZMX_SESSION}\
 $directory\
 $git_branch\
 $git_status\
@@ -11,11 +12,11 @@ $character"""
 add_newline=false
 
 [directory]
-style = "{{ $palette.primary }}"
+style = '{{ $palette.primary }}'
 
 [character]
-success_symbol = "[❯]({{ $palette.secondary }})"
-error_symbol = "[❯]({{ $palette.secondary }})"
+success_symbol = '[❯]({{ $palette.secondary }})'
+error_symbol = '[❯]({{ $palette.secondary }})'
 
 [hostname]
 ssh_only = false
@@ -23,24 +24,29 @@ detect_env_vars = ['SSH_CONNECTION', 'REMOTEHOST']
 format = '[$hostname 🌏 ]($style)'
 style = 'bold cyan'
 
+[env_var.ZMX_SESSION]
+format = '[$symbol $env_value]($style) '
+symbol = '🐌'
+style = 'bold #e9bb91'
+
 [git_branch]
-format = "[$branch]($style)"
-style = "bright black"
+format = '[$branch]($style)'
+style = 'bright black'
 
 [git_status]
-format = "[(*$conflicted$untracked$modified$staged$renamed$deleted) ($ahead_behind$stashed)]($style)"
-conflicted = "​"
-untracked = "​"
-modified = "​"
-staged = "​"
-renamed = "​"
-deleted = "​"
-stashed = "≡"
-style = "purple"
+format = '[(*$conflicted$untracked$modified$staged$renamed$deleted) ($ahead_behind$stashed)]($style)'
+conflicted = '​'
+untracked = '​'
+modified = '​'
+staged = '​'
+renamed = '​'
+deleted = '​'
+stashed = '≡'
+style = 'purple'
 
 [python]
 format = '([$symbol\($virtualenv\)]($style) )'
-style = "bold green"
+style = 'bold green'
 
 [pixi]
 disabled = true
